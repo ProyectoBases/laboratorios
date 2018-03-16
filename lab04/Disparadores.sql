@@ -32,3 +32,17 @@ BEGIN
 :NEW.estado := 'en diseño';
 END;
 /
+
+--Un candidato no puede registrar más de un plan de formación en el año y lo debe hacer en enero.--
+
+CREATE OR REPLACE TRIGGER AD_planFormacion_planFormacion
+BEFORE INSERT ON planFormacion
+FOR EACH ROW
+DECLARE piv NUMBER;
+BEGIN
+SELECT COUNT(candidato) INTO piv FROM planFormacion WHERE (correoCandidato = :NEW.correoCandidato) AND (EXTRACT(YEAR FROM :NEW.fecha) = EXTRACT(YEAR FROM SYSDATE));
+IF (piv >0) THEN
+RISE_APPLICATION_ERROR(-20001,'paila');
+END IF;
+END;
+/
