@@ -283,11 +283,6 @@ ADD CONSTRAINT FK_avance_planFormacion
 
 --FK curso--
 
-ALTER TABLE curso
-ADD CONSTRAINT FK_curso_habilidad
-   FOREIGN KEY (nombreCortoH)
-   REFERENCES habilidad (nombreCorto);
-
 ALTER TABLE metodologia
 ADD CONSTRAINT FK_metodologia_curso
    FOREIGN KEY (codigoCurso)
