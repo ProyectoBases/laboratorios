@@ -3,7 +3,7 @@
 --Tabla planFormacion--
 
 ALTER TABLE planFormacion
-ADD CONSTRAINT CK_planFormacion_estado CHECK (estado IN ('inactivo','en diseño','activo'));
+ADD CONSTRAINT CK_planFormacion_estado CHECK (estado IN ('inactivo','en diseno','activo'));
 
 --Tabla tienePrioridad--
 

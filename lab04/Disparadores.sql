@@ -36,7 +36,7 @@ CREATE OR REPLACE TRIGGER AD_planFormacion_estado
 BEFORE INSERT ON planFormacion
 FOR EACH ROW
 BEGIN
-:NEW.estado := 'en diseño';
+:NEW.estado := 'en diseno';
 END;
 /
 
@@ -50,10 +50,10 @@ piv NUMBER;
 BEGIN
 SELECT COUNT(correoCandidato) INTO piv FROM planFormacion WHERE (correoCandidato = :NEW.correoCandidato) AND (EXTRACT(YEAR FROM :NEW.fecha) = EXTRACT(YEAR FROM SYSDATE));
 IF (piv >0) THEN
-RAISE_APPLICATION_ERROR(-20000, 'no es posible insertar dos veces en el mismo año.');
+RAISE_APPLICATION_ERROR(-20000, 'no es posible insertar dos veces en el mismo ano.');
 END IF;
-IF (EXTRACT(MONTH FROM SYSDATE)<>1) THEN
-RAISE_APPLICATION_ERROR(-20000, 'no se puede insertar en este año');
+IF (EXTRACT(MONTH FROM SYSDATE)<>3) THEN
+RAISE_APPLICATION_ERROR(-20000, 'no se puede insertar en este ano');
 END IF;
 END;
 /
@@ -74,3 +74,19 @@ END IF;
 END;
 /
 
+---El estado sólo puede pasar de diseño a ejecución y  de ejecución a uno de los estados finales (aprobado o no aprobado). ---
+CREATE OR REPLACE TRIGGER AD_planFormacion_estado
+BEFORE UPDATE ON planFormacion
+FOR EACH ROW
+DECLARE
+est VARCHAR(20);
+BEGIN
+SELECT estado INTO est FROM planFormacion WHERE :NEW.numero = numero;
+IF (est = 'en diseno' AND :NEW.estado <> 'ejecucion') THEN
+RAISE_APPLICATION_ERROR(-20000, 'de diseno solo se puede pasar a ejecucion');
+END IF;
+IF (est = 'ejecucion' AND (:NEW.estado <> 'aprobado' OR :NEW.estado <> 'no aprobado')) THEN
+RAISE_APPLICATION_ERROR(-20000, 'de ejecucion solo puede pasar a aprobado o no aprobado');
+END IF;
+END;
+/

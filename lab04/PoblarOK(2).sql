@@ -52,7 +52,7 @@ INSERT INTO planFormacion VALUES(0,TO_DATE('10/April/2018'),'activo','camilo__@g
 INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','sarapupo@yahoo.es',TO_DATE('27/April/2018'),'davidsaa@hotmail.com');
 INSERT INTO planFormacion VALUES(0,TO_DATE('2/April/2018'),'activo','juliana@gmail.com',TO_DATE('22/April/2018'),'luisabmdez@gmail.com');
 INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','david_@hotmail.com',TO_DATE('22/April/2018'),'joseduran@gmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'activo','pabloneruda@yahoo.es',TO_DATE('22/April/2018'),'santiago_rocha_@hotmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'en diseno','pabloneruda@yahoo.es',TO_DATE('22/April/2018'),'santiago_rocha_@hotmail.com');
 --metodologia--
 INSERT INTO metodologia VALUES('presencial','1');                  
 INSERT INTO metodologia VALUES('noPresencial','2');
