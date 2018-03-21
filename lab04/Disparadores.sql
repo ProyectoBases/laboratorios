@@ -13,9 +13,10 @@ BEGIN
 SELECT MAX(numero)+1 INTO cont FROM planFormacion;
 SELECT COUNT(numero) INTO cont FROM planFormacion;
 IF (p = 0) THEN
-cont:=1;
-END IF;
+:NEW.numero := 0;
+ELSE
 :NEW.numero := cont;
+END IF;
 END;
 /
 
@@ -36,6 +37,7 @@ BEFORE INSERT ON planFormacion
 FOR EACH ROW
 BEGIN
 :NEW.estado := 'en diseno';
+-------RAISE_APPLICATION_ERROR(-20000, 'prueba');
 END;
 /
 
@@ -88,3 +90,62 @@ RAISE_APPLICATION_ERROR(-20000, 'de ejecucion solo puede pasar a aprobado o no a
 END IF;
 END;
 /
+---Las habilidades sólo pueden modificarse si está en estado de diseño.----
+
+CREATE OR REPLACE TRIGGER AD_habilidad
+BEFORE UPDATE ON habilidad
+FOR EACH ROW
+DECLARE
+est VARCHAR(50);
+BEGIN
+SELECT estado INTO est FROM ( TIENEPRIORIDAD NATURAL JOIN habilidad)NATURAL JOIN planFormacion WHERE :NEW.nombreCorto = nombreCorto;
+IF (est<>'en diseno') THEN
+RAISE_APPLICATION_ERROR(-20000, 'solo se puede modificar en estado de diseno');
+END IF;
+END;
+/
+
+UPDATE habilidad SET NOMBRE = 'PROGRAMADOR' WHERE NOMBRECORTO='programar';
+
+---En un plan de formación sólo puede existir una habilidad de prioridad alta y no deben incluirse habilidades que el candidato posea.---
+
+CREATE OR REPLACE TRIGGER AD_planFormacion_hab
+BEFORE INSERT ON tienePrioridad
+FOR EACH ROW
+DECLARE
+numero NUMBER(9);
+hab VARCHAR(10);
+BEGIN
+SELECT COUNT(nombreCorto) INTO numero FROM (tienePrioridad NATURAL JOIN PLANFORMACION)NATURAL JOIN HABILIDAD WHERE prioridad = 'alta' AND :NEW.nombreCortoH=nombreCorto AND :NEW.numeroPF = numero;
+SELECT nombreCorto INTO hab FROM (tienePrioridad NATURAL JOIN PLANFORMACION)NATURAL JOIN HABILIDAD WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.numeroPF = numero;
+IF (numero < 1) THEN
+IF (:NEW.prioridad = 'alta') THEN
+RAISE_APPLICATION_ERROR(-20000, 'sólo puede existir una habilidad de prioridad alta');
+END IF;
+END IF;
+IF (hab <> NULL) THEN
+RAISE_APPLICATION_ERROR(-20000, 'el candidato ya posee la habilidad');
+END IF;
+END;
+/
+---Las habilidades deben estar contempladas en algunos de los cursos que se están ofreciendo.----
+CREATE OR REPLACE TRIGGER AD_habilidad_curso
+BEFORE INSERT ON forma
+FOR EACH ROW
+DECLARE
+hab VARCHAR(5);
+BEGIN
+SELECT codigo INTO hab FROM (forma NATURAL JOIN habilidad)NATURAL JOIN curso WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.codigoCurso = codigo;
+IF (hab = NULL) THEN
+RAISE_APPLICATION_ERROR(-20000, 'las habilidades deben estar contempladas en alguno de los cursos que se estan ofreciendo');
+END IF;
+END;
+/
+
+---Las modificaciones sólo son posibles en el mes de enero.-----
+CREATE OR REPLACE TRIGGER MO_planFormacion
+BEFORE UPDATE ON planFormacion
+FOR EACH ROW
+IF (EXTRACT(MONTH,SYSDATE)=1) THEN
+
+END IF;

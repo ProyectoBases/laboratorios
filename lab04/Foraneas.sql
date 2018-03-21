@@ -19,13 +19,13 @@ ADD CONSTRAINT FK_planFormacion_candidato
    FOREIGN KEY (correoCandidato)
    REFERENCES candidato (correo);
    
-ALTER TABLE tienPrioridad
-ADD CONSTRAINT FK_tienPrioridad_habilidad
+ALTER TABLE tienePrioridad
+ADD CONSTRAINT FK_tienePrioridad_habilidad
    FOREIGN KEY (nombreCortoH)
    REFERENCES habilidad (nombreCorto);
    
-ALTER TABLE tienPrioridad
-ADD CONSTRAINT FK_tienPrioridad_planFormacion
+ALTER TABLE tienePrioridad
+ADD CONSTRAINT FK_tienePrioridadPlanFormacion
    FOREIGN KEY (numeroPF)
    REFERENCES planFormacion (numero);
 

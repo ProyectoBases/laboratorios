@@ -18,8 +18,8 @@ ADD CONSTRAINT PK_habilidad PRIMARY KEY (nombreCorto);
 ALTER TABLE planFormacion
 ADD CONSTRAINT PK_planFormacion PRIMARY KEY (numero);
 
-ALTER TABLE tienPrioridad
-ADD CONSTRAINT PK_tienPrioridad PRIMARY KEY (nombreCortoH, numeroPF);
+ALTER TABLE tienePrioridad
+ADD CONSTRAINT PK_tienePrioridad PRIMARY KEY (nombreCortoH, numeroPF);
 
 --PK avance--
 
