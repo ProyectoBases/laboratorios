@@ -1,6 +1,8 @@
----MANTENER PLAN FORMACIÓN-----
---Se asigna automaticamente el número de PlanFormación--
+----------MANTENER PLAN FORMACION----------
 
+----Adicion----
+
+--Se asigna automaticamente el numero de PlanFormacion--
 CREATE OR REPLACE TRIGGER AD_planFormacion_numero
 BEFORE INSERT ON planFormacion
 FOR EACH ROW
@@ -17,9 +19,7 @@ END IF;
 END;
 /
 
-
 --Se asigna automaticamente la fecha de PlanFormacion--
-
 CREATE OR REPLACE TRIGGER AD_planFormacion_fecha
 BEFORE INSERT ON planFormacion
 FOR EACH ROW
@@ -31,7 +31,6 @@ END;
 /
 
 --Se asigna automaticamente el estado de PlanFormacion--
-
 CREATE OR REPLACE TRIGGER AD_planFormacion_estado
 BEFORE INSERT ON planFormacion
 FOR EACH ROW
@@ -40,8 +39,7 @@ BEGIN
 END;
 /
 
---Un candidato no puede registrar más de un plan de formación en el año y lo debe hacer en enero.--
-
+--Un candidato no puede registrar mas de un plan de formacion en el ano y lo debe hacer en enero--
 CREATE OR REPLACE TRIGGER AD_planFormacion_planFormacion
 BEFORE INSERT ON planFormacion
 FOR EACH ROW
@@ -53,14 +51,12 @@ IF (piv >0) THEN
 RAISE_APPLICATION_ERROR(-20000, 'no es posible insertar dos veces en el mismo ano.');
 END IF;
 IF (EXTRACT(MONTH FROM SYSDATE)<>3) THEN
-RAISE_APPLICATION_ERROR(-20000, 'no se puede insertar en este ano');
+RAISE_APPLICATION_ERROR(-20000, 'no se puede insertar en este mes');
 END IF;
 END;
 /
 
----El evaluador no puede ser uno de los compañeros (candidatos)---
-
-
+--El evaluador no puede ser uno de los companeros (candidatos)--
 CREATE OR REPLACE TRIGGER AD_planFormacion_evaluador
 BEFORE INSERT ON planFormacion
 FOR EACH ROW
@@ -74,7 +70,9 @@ END IF;
 END;
 /
 
----El estado sólo puede pasar de diseño a ejecución y  de ejecución a uno de los estados finales (aprobado o no aprobado). ---
+----Modificacion----
+
+--El estado solo puede pasar de diseno a ejecucion y  de ejecucion a uno de los estados finales (aprobado o no aprobado)--
 CREATE OR REPLACE TRIGGER AD_planFormacion_estado
 BEFORE UPDATE ON planFormacion
 FOR EACH ROW
