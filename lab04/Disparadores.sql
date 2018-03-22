@@ -12,8 +12,8 @@ p NUMBER;
 BEGIN
 SELECT MAX(numero)+1 INTO cont FROM planFormacion;
 SELECT COUNT(numero) INTO cont FROM planFormacion;
-IF (p = 0) THEN
-:NEW.numero := 0;
+IF (p = 0 OR cont = NULL) THEN
+:NEW.numero := 1;
 ELSE
 :NEW.numero := cont;
 END IF;
@@ -37,7 +37,6 @@ BEFORE INSERT ON planFormacion
 FOR EACH ROW
 BEGIN
 :NEW.estado := 'en diseno';
--------RAISE_APPLICATION_ERROR(-20000, 'prueba');
 END;
 /
 
@@ -105,7 +104,6 @@ END IF;
 END;
 /
 
-UPDATE habilidad SET NOMBRE = 'PROGRAMADOR' WHERE NOMBRECORTO='programar';
 
 ---En un plan de formación sólo puede existir una habilidad de prioridad alta y no deben incluirse habilidades que el candidato posea.---
 
@@ -118,7 +116,7 @@ hab VARCHAR(10);
 BEGIN
 SELECT COUNT(nombreCorto) INTO numero FROM (tienePrioridad NATURAL JOIN PLANFORMACION)NATURAL JOIN HABILIDAD WHERE prioridad = 'alta' AND :NEW.nombreCortoH=nombreCorto AND :NEW.numeroPF = numero;
 SELECT nombreCorto INTO hab FROM (tienePrioridad NATURAL JOIN PLANFORMACION)NATURAL JOIN HABILIDAD WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.numeroPF = numero;
-IF (numero < 1) THEN
+IF (numero > 0) THEN
 IF (:NEW.prioridad = 'alta') THEN
 RAISE_APPLICATION_ERROR(-20000, 'sólo puede existir una habilidad de prioridad alta');
 END IF;
@@ -158,5 +156,34 @@ BEFORE DELETE ON planFormacion
 FOR EACH ROW
 BEGIN
 RAISE_APPLICATION_ERROR(20000,'no es permitido eliminar');
+END;
+/
+
+-----REGISTRAR AVANCE-------
+--se asigna automaticamente el numero--
+CREATE OR REPLACE TRIGGER AD_avanceNumero
+BEFORE INSERT ON avance
+FOR EACH ROW
+DECLARE
+nume NUMBER;
+BEGIN
+SELECT MAX(numero)+1 INTO nume FROM avance;
+IF (nume=NULL) THEN
+:NEW.numero := 1;
+ELSE
+:NEW.numero :=nume;
+END IF;
+END;
+/
+
+--se asigna la fecha automaticamente--
+CREATE OR REPLACE TRIGGER AD_avanceFecha
+BEFORE INSERT ON avance
+FOR EACH ROW
+DECLARE
+fe DATE;
+BEGIN
+SELECT SYSDATE INTO fe FROM DUAL;
+:NEW.fecha := fe;
 END;
 /
