@@ -30,8 +30,7 @@ CREATE TABLE avance(numero NUMBER NOT NULL,
 CREATE TABLE curso(codigo VARCHAR(5) NOT NULL,
                     nombre VARCHAR(50) NOT NULL,
                     detalle VARCHAR(50),
-                    cerrado NUMBER(1) NOT NULL,
-                    nombreCortoH VARCHAR(10) NOT NULL);
+                    cerrado NUMBER(1) NOT NULL);
 
 CREATE TABLE metodologia(metodologia VARCHAR(500) NOT NULL,
                         codigoCurso VARCHAR(5) NOT NULL);

@@ -11,8 +11,8 @@ cont NUMBER;
 p NUMBER;
 BEGIN
 SELECT MAX(numero)+1 INTO cont FROM planFormacion;
-SELECT COUNT(numero) INTO cont FROM planFormacion;
-IF (p = 0 OR cont = NULL) THEN
+SELECT COUNT(numero) INTO p FROM planFormacion;
+IF (p = 0) THEN
 :NEW.numero := 1;
 ELSE
 :NEW.numero := cont;
@@ -49,10 +49,10 @@ piv NUMBER;
 BEGIN
 SELECT COUNT(correoCandidato) INTO piv FROM planFormacion WHERE (correoCandidato = :NEW.correoCandidato) AND (EXTRACT(YEAR FROM :NEW.fecha) = EXTRACT(YEAR FROM SYSDATE));
 IF (piv >0) THEN
-RAISE_APPLICATION_ERROR(-20000, 'no es posible insertar dos veces en el mismo ano.');
+RAISE_APPLICATION_ERROR(-20001, 'no es posible insertar dos veces en el mismo ano.');
 END IF;
 IF (EXTRACT(MONTH FROM SYSDATE)<>3) THEN
-RAISE_APPLICATION_ERROR(-20000, 'no se puede insertar en este mes');
+RAISE_APPLICATION_ERROR(-20001, 'no se puede insertar en este mes');
 END IF;
 END;
 /
@@ -66,7 +66,7 @@ co number;
 BEGIN
 SELECT COUNT(correo) INTO co FROM candidato WHERE :NEW.evaluador = correo;
 IF (co>0) THEN
-RAISE_APPLICATION_ERROR(-20000, 'un evaluador no puede ser un candidato');
+RAISE_APPLICATION_ERROR(-20001, 'un evaluador no puede ser un candidato');
 END IF;
 END;
 /
@@ -82,10 +82,10 @@ est VARCHAR(20);
 BEGIN
 SELECT estado INTO est FROM planFormacion WHERE :NEW.numero = numero;
 IF (est = 'en diseno' AND :NEW.estado <> 'ejecucion') THEN
-RAISE_APPLICATION_ERROR(-20000, 'de diseno solo se puede pasar a ejecucion');
+RAISE_APPLICATION_ERROR(-20001, 'de diseno solo se puede pasar a ejecucion');
 END IF;
 IF (est = 'ejecucion' AND (:NEW.estado <> 'aprobado' OR :NEW.estado <> 'no aprobado')) THEN
-RAISE_APPLICATION_ERROR(-20000, 'de ejecucion solo puede pasar a aprobado o no aprobado');
+RAISE_APPLICATION_ERROR(-20001, 'de ejecucion solo puede pasar a aprobado o no aprobado');
 END IF;
 END;
 /
@@ -98,8 +98,8 @@ DECLARE
 est VARCHAR(50);
 BEGIN
 SELECT estado INTO est FROM ( TIENEPRIORIDAD NATURAL JOIN habilidad)NATURAL JOIN planFormacion WHERE :NEW.nombreCorto = nombreCorto;
-IF (est<>'en diseno') THEN
-RAISE_APPLICATION_ERROR(-20000, 'solo se puede modificar en estado de diseno');
+IF (est<>'en dieno') THEN
+RAISE_APPLICATION_ERROR(-20001, 'solo se puede modificar en estado de diseno');
 END IF;
 END;
 /
@@ -118,11 +118,11 @@ SELECT COUNT(nombreCorto) INTO numero FROM (tienePrioridad NATURAL JOIN PLANFORM
 SELECT nombreCorto INTO hab FROM (tienePrioridad NATURAL JOIN PLANFORMACION)NATURAL JOIN HABILIDAD WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.numeroPF = numero;
 IF (numero > 0) THEN
 IF (:NEW.prioridad = 'alta') THEN
-RAISE_APPLICATION_ERROR(-20000, 'sólo puede existir una habilidad de prioridad alta');
+RAISE_APPLICATION_ERROR(-20001, 'sólo puede existir una habilidad de prioridad alta');
 END IF;
 END IF;
 IF (hab <> NULL) THEN
-RAISE_APPLICATION_ERROR(-20000, 'el candidato ya posee la habilidad');
+RAISE_APPLICATION_ERROR(-20001, 'el candidato ya posee la habilidad');
 END IF;
 END;
 /
@@ -131,12 +131,14 @@ CREATE OR REPLACE TRIGGER AD_habilidad_curso
 BEFORE INSERT ON forma
 FOR EACH ROW
 DECLARE
-hab VARCHAR(5);
+codi VARCHAR(5);
+habi VARCHAR(10);
 BEGIN
-SELECT codigo INTO hab FROM (forma NATURAL JOIN habilidad)NATURAL JOIN curso WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.codigoCurso = codigo;
-IF (hab = NULL) THEN
-RAISE_APPLICATION_ERROR(-20000, 'las habilidades deben estar contempladas en alguno de los cursos que se estan ofreciendo');
-END IF;
+SELECT codigo INTO codi FROM curso WHERE codigo = :NEW.codigoCurso;
+SELECT nombreCorto INTO habi FROM habilidad WHERE nombreCorto = :NEW.nombreCortoH;
+EXCEPTION WHEN NO_DATA_FOUND THEN
+--DELETE FROM habilidad WHERE :NEW.nombreCortoH = nombreCorto;
+RAISE_APPLICATION_ERROR(-20001, 'Las habilidades deben estar contempladas en algunos de los cursos que se están ofreciendo');
 END;
 /
 
@@ -146,7 +148,7 @@ BEFORE UPDATE ON planFormacion
 FOR EACH ROW
 BEGIN
 IF (EXTRACT(MONTH FROM SYSDATE)<>1) THEN
-RAISE_APPLICATION_ERROR(20000,'solo son posibles las modificaciones en el mes de enero');
+RAISE_APPLICATION_ERROR(-20001,'solo son posibles las modificaciones en el mes de enero');
 END IF;
 END;
 /
@@ -155,7 +157,7 @@ CREATE OR REPLACE TRIGGER del_planFormacion
 BEFORE DELETE ON planFormacion
 FOR EACH ROW
 BEGIN
-RAISE_APPLICATION_ERROR(20000,'no es permitido eliminar');
+RAISE_APPLICATION_ERROR(-20001,'no es permitido eliminar');
 END;
 /
 
@@ -166,9 +168,12 @@ BEFORE INSERT ON avance
 FOR EACH ROW
 DECLARE
 nume NUMBER;
+p NUMBER;
 BEGIN
 SELECT MAX(numero)+1 INTO nume FROM avance;
-IF (nume=NULL) THEN
+SELECT COUNT(numero) INTO p FROM avance;
+--RAISE_APPLICATION_ERROR(-20000, nume);
+IF (p=0) THEN
 :NEW.numero := 1;
 ELSE
 :NEW.numero :=nume;
@@ -187,3 +192,12 @@ SELECT SYSDATE INTO fe FROM DUAL;
 :NEW.fecha := fe;
 END;
 /
+---Las inscripciones deben corresponder a cursos que contemplen alguna de las habilidades de su plan de formación y que no hayan sido aprobados o inscritos este año. ---
+CREATE OR REPLACE TRIGGER AD_avanceInscripcion
+BEFORE INSERT ON planFormacion
+FOR EACH ROW
+DECLARE
+var 
+BEGIN
+SELECT
+END;
