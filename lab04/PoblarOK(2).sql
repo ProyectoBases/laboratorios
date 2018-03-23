@@ -41,18 +41,18 @@ INSERT INTO curso VALUES('4','LPRO','refuerza tu habilidad para dirección de pr
 INSERT INTO curso VALUES('5','MUML','mejora tus habilidades de modelado UML',1);
 INSERT INTO curso VALUES('6','NMBD','mejora tus habilidades para normalizacion',1);
 --planFormacion--
-INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'activo','anadiaz@yahoo.es',TO_DATE('28/August/2018'),'gualdronsito@hotmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'activo','hector_gonzalez@hotmail.com',TO_DATE('28/August/2018'),'pepito@hotmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('2/April/2018'),'activo','carlitos_@gmail.com',TO_DATE('22/April/2018'),'pepita@hotmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','juan_@gmail.com',TO_DATE('28/April/2018'),'nataliaplc@gmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('1/June/2018'),'activo','camila__@hotmail.com',TO_DATE('22/April/2018'),'diego_cardenas@hotmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'activo','juanalol@gmail.com',TO_DATE('25/April/2018'),'alejoguzm@hotmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/April/2018'),'activo','sergioarb_@gmail.com',TO_DATE('22/April/2018'),'camilacano@yahoo.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/April/2018'),'activo','camilo__@gmail.com',TO_DATE('22/April/2018'),'vale_gon@hotmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','sarapupo@yahoo.es',TO_DATE('27/April/2018'),'davidsaa@hotmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('2/April/2018'),'activo','juliana@gmail.com',TO_DATE('22/April/2018'),'luisabmdez@gmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','david_@hotmail.com',TO_DATE('22/April/2018'),'joseduran@gmail.co');
-INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'en diseno','pabloneruda@yahoo.es',TO_DATE('22/April/2018'),'santiago_rocha_@hotmail.co');
+INSERT INTO planFormacion VALUES(1,TO_DATE('3/May/2018'),'activo','anadiaz@yahoo.es',TO_DATE('28/August/2018'),'gualdronsito@hotmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'activo','hector_gonzalez@hotmail.com',TO_DATE('28/August/2018'),'pepito@hotmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('2/April/2018'),'activo','carlitos_@gmail.com',TO_DATE('22/April/2018'),'pepita@hotmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','juan_@gmail.com',TO_DATE('28/April/2018'),'nataliaplc@gmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('1/June/2018'),'activo','camila__@hotmail.com',TO_DATE('22/April/2018'),'diego_cardenas@hotmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'activo','juanalol@gmail.com',TO_DATE('25/April/2018'),'alejoguzm@hotmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('10/April/2018'),'activo','sergioarb_@gmail.com',TO_DATE('22/April/2018'),'camilacano@yahoo.es');
+INSERT INTO planFormacion VALUES(0,TO_DATE('10/April/2018'),'activo','camilo__@gmail.com',TO_DATE('22/April/2018'),'vale_gon@hotmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','sarapupo@yahoo.es',TO_DATE('27/April/2018'),'davidsaa@hotmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('2/April/2018'),'activo','juliana@gmail.com',TO_DATE('22/April/2018'),'luisabmdez@gmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','david_@hotmail.com',TO_DATE('22/April/2018'),'joseduran@gmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'en diseno','pabloneruda@yahoo.es',TO_DATE('22/April/2018'),'santiago_rocha_@hotmail.com');
 --metodologia--
 INSERT INTO metodologia VALUES('presencial','1');                  
 INSERT INTO metodologia VALUES('noPresencial','2');
