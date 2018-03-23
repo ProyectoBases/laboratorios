@@ -8,7 +8,7 @@ ADD CONSTRAINT CK_planFormacion_estado CHECK (estado IN ('inactivo','en diseno',
 --Tabla tienePrioridad--
 
 ALTER TABLE tienePrioridad
-ADD CONSTRAINT CK_tienPrioridad_prioridad CHECK (prioridad IN (1,2,3,4,5));
+ADD CONSTRAINT CK_tienPrioridad_prioridad CHECK (prioridad IN ('alta','media','baja'));
 
 --Tabla avance--
 

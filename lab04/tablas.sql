@@ -17,7 +17,7 @@ CREATE TABLE planFormacion(numero NUMBER NOT NULL,
                             fechaFin DATE,
                             correoCandidato VARCHAR(50) NOT NULL);
                 
-CREATE TABLE tienePrioridad(prioridad NUMBER(1) NOT NULL,
+CREATE TABLE tienePrioridad(prioridad VARCHAR(10) NOT NULL,
                             nombreCortoH VARCHAR(10) NOT NULL,
                             numeroPF NUMBER NOT NULL);
 --CRUD avance--         

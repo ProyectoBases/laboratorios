@@ -194,10 +194,35 @@ END;
 /
 ---Las inscripciones deben corresponder a cursos que contemplen alguna de las habilidades de su plan de formación y que no hayan sido aprobados o inscritos este año. ---
 CREATE OR REPLACE TRIGGER AD_avanceInscripcion
-BEFORE INSERT ON planFormacion
+BEFORE INSERT ON tienePrioridad
 FOR EACH ROW
 DECLARE
-var 
+var VARCHAR(5);
 BEGIN
-SELECT
+SELECT codigo INTO var FROM (curso NATURAL JOIN forma)NATURAL JOIN habilidad WHERE :NEW.nombreCortoH = nombreCorto;
+EXCEPTION WHEN NO_DATA_FOUND THEN
+RAISE_APPLICATION_ERROR(-20000, 'Las inscripciones deben corresponder a cursos que contemplen alguna de las habilidades de su plan de formación');
 END;
+/
+
+-------------REGISTRAR CURSOS------------------
+--El atributo cerrado debe iniciar en false automaticamente.--
+CREATE OR REPLACE TRIGGER AD_curso_cerrado
+BEFORE INSERT ON curso
+FOR EACH ROW
+BEGIN
+:NEW.cerrado := 'false';
+END;
+/
+--Se debe registrar primero la metodología--
+CREATE OR REPLACE TRIGGER AD_cursoHabilidad
+BEFORE INSERT ON curso
+FOR EACH ROW
+DECLARE
+var VARCHAR(5);
+BEGIN
+SELECT codigoCurso INTO var FROM metodologia WHERE :NEW.codigo = codigoCurso;
+EXCEPTION WHEN NO_DATA_FOUND THEN
+RAISE_APPLICATION_ERROR(-20000,'agrege primero la metodologia');
+END;
+/
