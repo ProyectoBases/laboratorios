@@ -115,15 +115,14 @@ numero NUMBER(9);
 hab VARCHAR(10);
 BEGIN
 SELECT COUNT(nombreCorto) INTO numero FROM (tienePrioridad NATURAL JOIN PLANFORMACION)NATURAL JOIN HABILIDAD WHERE prioridad = 'alta' AND :NEW.nombreCortoH=nombreCorto AND :NEW.numeroPF = numero;
-SELECT nombreCorto INTO hab FROM (tienePrioridad NATURAL JOIN PLANFORMACION)NATURAL JOIN HABILIDAD WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.numeroPF = numero;
+SELECT nombreCorto INTO hab FROM (candidato NATURAL JOIN posee)NATURAL JOIN HABILIDAD NATURAL JOIN planFormacion WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.numeroPF = numero;
 IF (numero > 0) THEN
 IF (:NEW.prioridad = 'alta') THEN
-RAISE_APPLICATION_ERROR(-20001, 'sólo puede existir una habilidad de prioridad alta');
+RAISE_APPLICATION_ERROR(-20001, 'solo puede existir una habilidad de prioridad alta');
 END IF;
 END IF;
-IF (hab <> NULL) THEN
+EXCEPTION WHEN NO_DATA_FOUND THEN
 RAISE_APPLICATION_ERROR(-20001, 'el candidato ya posee la habilidad');
-END IF;
 END;
 /
 ---Las habilidades deben estar contempladas en algunos de los cursos que se están ofreciendo.----
