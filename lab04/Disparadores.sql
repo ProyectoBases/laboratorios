@@ -89,7 +89,7 @@ RAISE_APPLICATION_ERROR(-20001, 'de ejecucion solo puede pasar a aprobado o no a
 END IF;
 END;
 /
----Las habilidades sÛlo pueden modificarse si est· en estado de diseÒo.----
+---Las habilidades s√≥lo pueden modificarse si est√° en estado de dise√±o.----
 
 CREATE OR REPLACE TRIGGER AD_habilidad
 BEFORE UPDATE ON habilidad
@@ -98,14 +98,14 @@ DECLARE
 est VARCHAR(50);
 BEGIN
 SELECT estado INTO est FROM ( TIENEPRIORIDAD NATURAL JOIN habilidad)NATURAL JOIN planFormacion WHERE :NEW.nombreCorto = nombreCorto;
-IF (est<>'en dieno') THEN
+IF (est<>'en diseno') THEN
 RAISE_APPLICATION_ERROR(-20001, 'solo se puede modificar en estado de diseno');
 END IF;
 END;
 /
 
 
----En un plan de formaciÛn sÛlo puede existir una habilidad de prioridad alta y no deben incluirse habilidades que el candidato posea.---
+---En un plan de formaci√≥n s√≥lo puede existir una habilidad de prioridad alta y no deben incluirse habilidades que el candidato posea.---
 
 CREATE OR REPLACE TRIGGER AD_planFormacion_hab
 BEFORE INSERT ON tienePrioridad
@@ -118,7 +118,7 @@ SELECT COUNT(nombreCorto) INTO numero FROM (tienePrioridad NATURAL JOIN PLANFORM
 SELECT nombreCorto INTO hab FROM (tienePrioridad NATURAL JOIN PLANFORMACION)NATURAL JOIN HABILIDAD WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.numeroPF = numero;
 IF (numero > 0) THEN
 IF (:NEW.prioridad = 'alta') THEN
-RAISE_APPLICATION_ERROR(-20001, 'sÛlo puede existir una habilidad de prioridad alta');
+RAISE_APPLICATION_ERROR(-20001, 's√≥lo puede existir una habilidad de prioridad alta');
 END IF;
 END IF;
 IF (hab <> NULL) THEN
@@ -126,7 +126,7 @@ RAISE_APPLICATION_ERROR(-20001, 'el candidato ya posee la habilidad');
 END IF;
 END;
 /
----Las habilidades deben estar contempladas en algunos de los cursos que se est·n ofreciendo.----
+---Las habilidades deben estar contempladas en algunos de los cursos que se est√°n ofreciendo.----
 CREATE OR REPLACE TRIGGER AD_habilidad_curso
 BEFORE INSERT ON forma
 FOR EACH ROW
@@ -138,11 +138,11 @@ SELECT codigo INTO codi FROM curso WHERE codigo = :NEW.codigoCurso;
 SELECT nombreCorto INTO habi FROM habilidad WHERE nombreCorto = :NEW.nombreCortoH;
 EXCEPTION WHEN NO_DATA_FOUND THEN
 --DELETE FROM habilidad WHERE :NEW.nombreCortoH = nombreCorto;
-RAISE_APPLICATION_ERROR(-20001, 'Las habilidades deben estar contempladas en algunos de los cursos que se est·n ofreciendo');
+RAISE_APPLICATION_ERROR(-20001, 'Las habilidades deben estar contempladas en algunos de los cursos que se est√°n ofreciendo');
 END;
 /
 
----Las modificaciones sÛlo son posibles en el mes de enero.-----
+---Las modificaciones s√≥lo son posibles en el mes de enero.-----
 CREATE OR REPLACE TRIGGER MO_planFormacion
 BEFORE UPDATE ON planFormacion
 FOR EACH ROW
@@ -192,7 +192,7 @@ SELECT SYSDATE INTO fe FROM DUAL;
 :NEW.fecha := fe;
 END;
 /
----Las inscripciones deben corresponder a cursos que contemplen alguna de las habilidades de su plan de formaciÛn y que no hayan sido aprobados o inscritos este aÒo. ---
+---Las inscripciones deben corresponder a cursos que contemplen alguna de las habilidades de su plan de formaci√≥n y que no hayan sido aprobados o inscritos este a√±o. ---
 CREATE OR REPLACE TRIGGER AD_avanceInscripcion
 BEFORE INSERT ON planFormacion
 FOR EACH ROW
