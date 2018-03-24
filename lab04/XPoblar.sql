@@ -2,7 +2,7 @@
 
 DELETE FROM forma;
 
-DELETE FROM tienPrioridad;
+DELETE FROM tienePrioridad;
 
 DELETE FROM posee;
 

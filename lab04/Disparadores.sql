@@ -96,35 +96,59 @@ BEFORE UPDATE ON habilidad
 FOR EACH ROW
 DECLARE
 est VARCHAR(50);
+--CURSOR cur IS SELECT * FROM ( TIENEPRIORIDAD JOIN habilidad ON tienePrioridad.nombreCortoH = habilidad.nombreCorto) JOIN planFormacion ON planFormacion.numero = tienePrioridad.numeroPF 
+--WHERE :NEW.nombreCorto = nombreCorto OR :NEW.nombre = habilidad.nombre;
 BEGIN
-SELECT estado INTO est FROM ( TIENEPRIORIDAD NATURAL JOIN habilidad)NATURAL JOIN planFormacion WHERE :NEW.nombreCorto = nombreCorto;
-IF (est<>'en diseno') THEN
-RAISE_APPLICATION_ERROR(-20001, 'solo se puede modificar en estado de diseno');
-END IF;
+UPDATE nombreCorto
+SET nombreCorto = :NEW.nombreCorto
+WHERE 1=1;
 END;
 /
+DROP TRIGGER AD_habilidad;
 
-
----En un plan de formaci贸n s贸lo puede existir una habilidad de prioridad alta y no deben incluirse habilidades que el candidato posea.---
+SELECT * FROM( TIENEPRIORIDAD JOIN habilidad ON tienePrioridad.nombreCortoH = habilidad.nombreCorto) JOIN planFormacion ON planFormacion.numero = tienePrioridad.numeroPF
+WHERE nombreCorto = 'programar';
+---En un plan de formaci贸n s贸lo puede existir una habilidad de prioridad alta---
 
 CREATE OR REPLACE TRIGGER AD_planFormacion_hab
 BEFORE INSERT ON tienePrioridad
 FOR EACH ROW
 DECLARE
 numero NUMBER(9);
-hab VARCHAR(10);
+--hab VARCHAR(10);
 BEGIN
-SELECT COUNT(nombreCorto) INTO numero FROM (tienePrioridad NATURAL JOIN PLANFORMACION)NATURAL JOIN HABILIDAD WHERE prioridad = 'alta' AND :NEW.nombreCortoH=nombreCorto AND :NEW.numeroPF = numero;
-SELECT nombreCorto INTO hab FROM (candidato NATURAL JOIN posee)NATURAL JOIN HABILIDAD NATURAL JOIN planFormacion WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.numeroPF = numero;
+SELECT COUNT(nombreCorto) INTO numero FROM (tienePrioridad JOIN planFormacion ON planFormacion.numero = tienePrioridad.numeroPF)JOIN habilidad ON habilidad.nombreCorto = tienePrioridad.nombreCortoH 
+WHERE prioridad = 'alta' AND :NEW.numeroPF = numero;
+--SELECT nombreCorto INTO hab FROM (candidato NATURAL JOIN posee)NATURAL JOIN HABILIDAD NATURAL JOIN planFormacion WHERE :NEW.nombreCortoH = nombreCorto AND :NEW.numeroPF = numero;
 IF (numero > 0) THEN
 IF (:NEW.prioridad = 'alta') THEN
 RAISE_APPLICATION_ERROR(-20001, 'solo puede existir una habilidad de prioridad alta');
 END IF;
 END IF;
-EXCEPTION WHEN NO_DATA_FOUND THEN
-RAISE_APPLICATION_ERROR(-20001, 'el candidato ya posee la habilidad');
 END;
 /
+--no deben incluirse habilidades que el candidato posea.--
+CREATE OR REPLACE TRIGGER AD_habilidadCandidato
+BEFORE INSERT ON posee
+FOR EACH ROW
+DECLARE
+hab VARCHAR(10);
+contador NUMBER;
+BEGIN
+hab := ' ';
+SELECT COUNT(nombreCorto) INTO contador FROM (candidato JOIN posee ON candidato.correo = posee.correoCandidato)JOIN habilidad ON habilidad.nombreCorto = posee.nombreCortoH
+WHERE candidato.correo = :NEW.correoCandidato AND habilidad.nombreCorto = :NEW.nombreCortoH;
+IF (contador <> 0) THEN
+SELECT nombreCorto INTO hab FROM (candidato JOIN posee ON candidato.correo = posee.correoCandidato)JOIN habilidad ON habilidad.nombreCorto = posee.nombreCortoH
+WHERE candidato.correo = :NEW.correoCandidato AND habilidad.nombreCorto = :NEW.nombreCortoH;
+--RAISE_APPLICATION_ERROR(-20000, hab);
+IF (hab <> ' ') THEN
+RAISE_APPLICATION_ERROR(-20000, 'el candidato ya tiene la habilidad');
+END IF;
+END IF;
+END;
+/
+
 ---Las habilidades deben estar contempladas en algunos de los cursos que se est谩n ofreciendo.----
 CREATE OR REPLACE TRIGGER AD_habilidad_curso
 BEFORE INSERT ON forma
@@ -146,7 +170,7 @@ CREATE OR REPLACE TRIGGER MO_planFormacion
 BEFORE UPDATE ON planFormacion
 FOR EACH ROW
 BEGIN
-IF (EXTRACT(MONTH FROM SYSDATE)<>1) THEN
+IF (EXTRACT(MONTH FROM SYSDATE)<>3) THEN
 RAISE_APPLICATION_ERROR(-20001,'solo son posibles las modificaciones en el mes de enero');
 END IF;
 END;
@@ -198,30 +222,17 @@ FOR EACH ROW
 DECLARE
 var VARCHAR(5);
 BEGIN
-SELECT codigo INTO var FROM (curso NATURAL JOIN forma)NATURAL JOIN habilidad WHERE :NEW.nombreCortoH = nombreCorto;
+SELECT curso.codigo INTO var FROM (curso JOIN forma ON curso.codigo = forma.codigoCurso) JOIN habilidad ON habilidad.nombreCorto = forma.nombreCortoH WHERE :NEW.nombreCortoH = habilidad.nombreCorto;
 EXCEPTION WHEN NO_DATA_FOUND THEN
 RAISE_APPLICATION_ERROR(-20000, 'Las inscripciones deben corresponder a cursos que contemplen alguna de las habilidades de su plan de formaci髇');
 END;
 /
-
 -------------REGISTRAR CURSOS------------------
 --El atributo cerrado debe iniciar en false automaticamente.--
 CREATE OR REPLACE TRIGGER AD_curso_cerrado
 BEFORE INSERT ON curso
 FOR EACH ROW
 BEGIN
-:NEW.cerrado := 'false';
-END;
-/
---Se debe registrar primero la metodolog韆--
-CREATE OR REPLACE TRIGGER AD_cursoHabilidad
-BEFORE INSERT ON curso
-FOR EACH ROW
-DECLARE
-var VARCHAR(5);
-BEGIN
-SELECT codigoCurso INTO var FROM metodologia WHERE :NEW.codigo = codigoCurso;
-EXCEPTION WHEN NO_DATA_FOUND THEN
-RAISE_APPLICATION_ERROR(-20000,'agrege primero la metodologia');
+:NEW.cerrado := 0;
 END;
 /
