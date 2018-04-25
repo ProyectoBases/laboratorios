@@ -1,0 +1,24 @@
+<?xml version = "1.0"?>
+<!-- detalles -->
+<!--Pais solo puede tener ciudad y lenguaje YA ESTA -->
+<!--Los países deben tener el nombre, la poblacion y el area YA ESTA-->
+<!--Las ciudades deben tener su nombre y la poblacion YA ESTA-->
+<!--El nombre de las ciudades es un texto -->
+<!--La poblacion de las ciudades es un texto -->
+<!--El lenguaje debe contener el porcentaje YA ESTA-->
+<!--El nombre del lenguaje es un texto YA ESTA-->
+
+<!DOCTYPE countries[
+
+	<!ELEMENT country (city,language)*>
+    <!ELEMENT language (#PCDATA)>
+	<!ELEMENT city (name,population)>
+	<!ELEMENT name (#PCDATA)>
+	<!ELEMENT population (#PCDATA)>
+	
+	<!ATTLIST country name CDATA #REQUIRED>
+	<!ATTLIST country population CDATA #REQUIRED>
+	<!ATTLIST country area CDATA #REQUIRED>
+	<!ATTLIST language percentage CDATA #REQUIRED>
+	
+]>
