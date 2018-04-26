@@ -9,7 +9,6 @@
 <!--El nombre del lenguaje es un texto YA ESTA-->
 
 <!DOCTYPE countries[
-
 	<!ELEMENT country (city,language)*>
     <!ELEMENT language (#PCDATA)>
 	<!ELEMENT city (name,population)>
@@ -20,5 +19,4 @@
 	<!ATTLIST country population CDATA #REQUIRED>
 	<!ATTLIST country area CDATA #REQUIRED>
 	<!ATTLIST language percentage CDATA #REQUIRED>
-	
 ]>
