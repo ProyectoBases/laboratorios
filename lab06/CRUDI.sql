@@ -60,3 +60,40 @@ RETURN(Info_Candidato);
 END;
 
 END PC_PLANDEFORMACION;
+
+/
+
+CREATE OR REPLACE PACKAGE BODY PC_CURSOS AS
+
+PROCEDURE Adicionar_Curso (id VARCHAR, name VARCHAR, habilitado NUMBER) IS
+BEGIN
+INSERT INTO curso (codigo, nombre, cerrado) VALUES (id, name, habilitado);
+COMMIT;
+EXCEPTION
+WHEN OTHERS THEN
+ROLLBACK;
+RAISE_APPLICATION_ERROR(-20003, 'No se puede adicionar el curso');
+END Adicionar_Curso;
+
+PROCEDURE Modificar_Curso (id VARCHAR, info VARCHAR, habilitado NUMBER) IS
+BEGIN
+UPDATE curso SET detalle = info, cerrado = habilitado WHERE codigo = id;
+COMMIT;
+EXCEPTION
+WHEN OTHERS THEN
+ROLLBACK;
+RAISE_APPLICATION_ERROR(-20004, 'No se puede modificar el curso');
+END Modificar_Curso;
+
+PROCEDURE Eliminar_Curso (id VARCHAR) IS
+BEGIN
+DELETE FROM curso WHERE codigo = id;
+COMMIT;
+EXCEPTION
+WHEN OTHERS THEN
+ROLLBACK;
+RAISE_APPLICATION_ERROR(-20005, 'No se puede eliminar el curso');
+END Eliminar_Curso;
+
+END PC_CURSOS;
+
