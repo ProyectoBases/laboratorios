@@ -8,7 +8,7 @@ PROCEDURE Adicionar_Prioridad (Tprioridad VARCHAR);
 PROCEDURE Modificar_Plan (id NUMBER, habilitado VARCHAR, profe VARCHAR, final DATE);
 PROCEDURE Modificar_Prioridad (numeroP NUMBER, nombreH VARCHAR, Tprioridad VARCHAR);
 FUNCTION Consultar_Forma_Hab RETURN SYS_REFCURSOR;
-FUNCTION Consultar_Cal_Candidato RETURN SYS_REFCURSOR;
+FUNCTION Consultar_Info_Candidato RETURN SYS_REFCURSOR;
 
 END PC_PLANDEFORMACION;
 
