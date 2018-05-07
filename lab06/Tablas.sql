@@ -31,6 +31,7 @@ CREATE TABLE curso(codigo VARCHAR(5) NOT NULL,
                     nombre VARCHAR(50) NOT NULL,
                     detalle VARCHAR(50),
                     cerrado NUMBER(1) NOT NULL,
+					nombreCortoH VARCHAR(10) NOT NULL,
 					tDetalle XMLTYPE);
 
 CREATE TABLE metodologia(metodologia VARCHAR(500) NOT NULL,
