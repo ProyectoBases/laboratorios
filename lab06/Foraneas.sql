@@ -57,3 +57,7 @@ ALTER TABLE forma
 ADD CONSTRAINT FK_forma_curso
    FOREIGN KEY (codigoCurso)
    REFERENCES curso (codigo);
+
+
+ALTER TABLE curso ADD CONSTRAINT FK_curso_habilidad
+FOREIGN KEY (nombreCortoH) REFERENCES habilidad(nombreCorto);
