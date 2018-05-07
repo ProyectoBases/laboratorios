@@ -20,6 +20,6 @@ PROCEDURE Adicionar_Curso (id VARCHAR, name VARCHAR, habilitado NUMBER);
 PROCEDURE Modificar_Curso (id VARCHAR, info VARCHAR, habilitado NUMBER);
 PROCEDURE Eliminar_Curso (id VARCHAR);
 FUNCTION Consultar_Curso RETURN XMLTYPE;
-FUNCTION Consultar_CursoHab(habilidad VARCHAR) RETURN SYS_REFCURSOR;
+FUNCTION Consultar_CursoHab(hab VARCHAR) RETURN SYS_REFCURSOR;
 
 END PC_CURSOS;
