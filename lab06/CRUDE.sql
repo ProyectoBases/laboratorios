@@ -11,6 +11,7 @@ FUNCTION Consultar_Forma_Hab RETURN SYS_REFCURSOR;
 FUNCTION Consultar_Info_Candidato RETURN SYS_REFCURSOR;
 
 END PC_PLANDEFORMACION;
+/
 
 ---2. Mantener Curso---
 
