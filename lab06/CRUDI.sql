@@ -94,11 +94,11 @@ ROLLBACK;
 RAISE_APPLICATION_ERROR(-20005, 'No se puede eliminar el curso');
 END Eliminar_Curso;
 
-/*FUNCTION Consultar_Curso RETURN XMLTYPE IS Cons_Curso XMLTYPE;
+FUNCTION Consultar_Curso RETURN XMLTYPE IS Cons_Curso XMLTYPE;
 BEGIN
 Cons_Curso := dbms_xmlgen.getxmltype ('SELECT * FROM curso');
 RETURN Cons_Curso;
-END;*/
+END;    ---esta mal---
 
 FUNCTION Consultar_CursoHab(hab VARCHAR) RETURN SYS_REFCURSOR IS Curso_Hab SYS_REFCURSOR;
 BEGIN
