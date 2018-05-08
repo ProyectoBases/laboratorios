@@ -9,4 +9,4 @@ GRANT EXECUTE ON PA_CANDIDATO TO Candidatoos;
 --Asumiendo que dos de sus compañeros de curso (no del equipo) son candidatos, asígnenles ese rol.--
 
 GRANT Candidatoos TO bd2125666;
-GRANT Candidatoos TO 'usuario';
+GRANT Candidatoos TO bd2135429;
