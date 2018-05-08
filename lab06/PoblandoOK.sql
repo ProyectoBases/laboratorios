@@ -121,18 +121,18 @@ INSERT INTO curso VALUES('7','TELO','mejora tus habilidades para surfear',1,'sur
 </tDetalle>');
 
 --planFormacion--
-INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'activo','anadiaz@yahoo.es',TO_DATE('28/August/2018'),'gualdronsito@hotmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('5/July/2018'),'activo','hector_gonzalez@hotmail.com',TO_DATE('20/August/2018'),'pepito@hotmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('2/April/2018'),'activo','carlitos_@gmail.com',TO_DATE('22/April/2018'),'pepita@hotmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','juan_@gmail.com',TO_DATE('28/April/2018'),'nataliaplc@gmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('1/June/2018'),'activo','camila__@hotmail.com',TO_DATE('22/April/2018'),'diego_cardenas@hotmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'activo','juanalol@gmail.com',TO_DATE('25/April/2018'),'alejoguzm@hotmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/April/2018'),'activo','sergioarb_@gmail.com',TO_DATE('22/April/2018'),'camilacano@yahoo.es');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/April/2018'),'activo','camilo__@gmail.com',TO_DATE('22/April/2018'),'vale_gon@hotmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','sarapupo@yahoo.es',TO_DATE('27/April/2018'),'davidsaa@hotmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('2/April/2018'),'activo','juliana@gmail.com',TO_DATE('22/April/2018'),'luisabmdez@gmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('10/May/2018'),'activo','david_@hotmail.com',TO_DATE('22/April/2018'),'joseduran@gmail.com');
-INSERT INTO planFormacion VALUES(0,TO_DATE('3/May/2018'),'en diseno','pabloneruda@yahoo.es',TO_DATE('22/April/2018'),'santiago_rocha_@hotmail.com');
+INSERT INTO planFormacion VALUES(0,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','anadiaz@yahoo.es',TO_DATE('5-1-2018','DD-MM-YYYY'),'gualdronsito@hotmail.com');
+INSERT INTO planFormacion VALUES(1,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','hector_gonzalez@hotmail.com',TO_DATE('5-1-2018','DD-MM-YYYY'),'pepito@hotmail.com');
+INSERT INTO planFormacion VALUES(2,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','carlitos_@gmail.com',TO_DATE('5-1-2018','DD-MM-YYYY'),'pepita@hotmail.com');
+INSERT INTO planFormacion VALUES(3,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','juan_@gmail.com',TO_DATE('5-1-2018','DD-MM-YYYY'),'nataliaplc@gmail.com');
+INSERT INTO planFormacion VALUES(4,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','camila__@hotmail.com',TO_DATE('5-1-2018','DD-MM-YYYY'),'diego_cardenas@hotmail.com');
+INSERT INTO planFormacion VALUES(5,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','juanalol@gmail.com',TO_DATE('5-1-2018','DD-MM-YYYY'),'alejoguzm@hotmail.com');
+INSERT INTO planFormacion VALUES(6,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','sergioarb_@gmail.com',TO_DATE('5-1-2018','DD-MM-YYYY'),'camilacano@yahoo.es');
+INSERT INTO planFormacion VALUES(7,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','camilo__@gmail.com',TO_DATE('5-1-2018','DD-MM-YYYY'),'vale_gon@hotmail.com');
+INSERT INTO planFormacion VALUES(8,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','sarapupo@yahoo.es',TO_DATE('5-1-2018','DD-MM-YYYY'),'davidsaa@hotmail.com');
+INSERT INTO planFormacion VALUES(9,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','juliana@gmail.com',TO_DATE('5-1-2018','DD-MM-YYYY'),'luisabmdez@gmail.com');
+INSERT INTO planFormacion VALUES(10,TO_DATE('5-1-2018','DD-MM-YYYY'),'activo','david_@hotmail.com',TO_DATE('5-1-2018','DD-MM-YYYY'),'joseduran@gmail.com');
+INSERT INTO planFormacion VALUES(11,TO_DATE('5-1-2018','DD-MM-YYYY'),'en diseno','pabloneruda@yahoo.es',TO_DATE('5-1-2018','DD-MM-YYYY'),'santiago_rocha_@hotmail.com');
 
 --metodologia--
 INSERT INTO metodologia VALUES('presencial','1');                  
@@ -154,23 +154,20 @@ INSERT INTO forma VALUES('modelarUML','5');
 INSERT INTO forma VALUES('normalizar','6');
 
 --avance--
-INSERT INTO avance VALUES(1,TO_DATE('3/July/2018'),'alto','1',1);
-INSERT INTO avance VALUES(2,TO_DATE('5/August/2018'),'medio','2',2);
-INSERT INTO avance VALUES(3,TO_DATE('2/May/2018'),'bajo','3',3);
-INSERT INTO avance VALUES(4,TO_DATE('1/June/2018'),'bajo','5',4);
-INSERT INTO avance VALUES(5,TO_DATE('1/August/2018'),'alto','4',5);
-INSERT INTO avance VALUES(6,TO_DATE('3/July/2018'),'alto','1',6);
-INSERT INTO avance VALUES(7,TO_DATE('10/August/2018'),'alto','6',7);
-INSERT INTO avance VALUES(8,TO_DATE('10/August/2018'),'alto','6',8);
-INSERT INTO avance VALUES(9,TO_DATE('1/June/2018'),'bajo','5',9);
-INSERT INTO avance VALUES(10,TO_DATE('2/May/2018'),'bajo','3',10);
-INSERT INTO avance VALUES(11,TO_DATE('1/June/2018'),'alto','5',11);
-INSERT INTO avance VALUES(12,TO_DATE('3/July/2018'),'alto','1',12);
+INSERT INTO avance VALUES(1,TO_DATE('5-1-2018','DD-MM-YYYY'),'alto','1',1);
+INSERT INTO avance VALUES(2,TO_DATE('5-1-2018','DD-MM-YYYY'),'medio','2',2);
+INSERT INTO avance VALUES(3,TO_DATE('5-1-2018','DD-MM-YYYY'),'bajo','3',3);
+INSERT INTO avance VALUES(4,TO_DATE('5-1-2018','DD-MM-YYYY'),'bajo','5',4);
+INSERT INTO avance VALUES(5,TO_DATE('5-1-2018','DD-MM-YYYY'),'alto','4',5);
+INSERT INTO avance VALUES(6,TO_DATE('5-1-2018','DD-MM-YYYY'),'alto','1',6);
+INSERT INTO avance VALUES(7,TO_DATE('5-1-2018','DD-MM-YYYY'),'alto','6',7);
+INSERT INTO avance VALUES(8,TO_DATE('5-1-2018','DD-MM-YYYY'),'alto','6',8);
+INSERT INTO avance VALUES(9,TO_DATE('5-1-2018','DD-MM-YYYY'),'bajo','5',9);
+INSERT INTO avance VALUES(10,TO_DATE('5-1-2018','DD-MM-YYYY'),'bajo','3',10);
+INSERT INTO avance VALUES(11,TO_DATE('5-1-2018','DD-MM-YYYY'),'alto','5',11);
 
 --tienePrioridad--
 INSERT INTO tienePrioridad VALUES('alta','programar',1);
-INSERT INTO tienePrioridad VALUES('alta','programar',6);
-INSERT INTO tienePrioridad VALUES('alta','programar',12);
 INSERT INTO tienePrioridad VALUES('alta','modelarUML',4);
 INSERT INTO tienePrioridad VALUES('alta','modelarUML',9);
 INSERT INTO tienePrioridad VALUES('alta','modelarUML',11);
