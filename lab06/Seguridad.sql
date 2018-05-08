@@ -8,8 +8,7 @@ CREATE ROLE Candidatoos;
 GRANT EXECUTE ON PA_CANDIDATO TO Candidatoos;
 --Asumiendo que dos de sus compañeros de curso (no del equipo) son candidatos, asígnenles ese rol.--
 
-<<<<<<< HEAD
-=======
+
 GRANT Candidatoos TO bd2125666;
 GRANT Candidatoos TO bd2135429;
->>>>>>> 2c98d3ddd608cd67c29d019d4e1b7a2b9b7ab537
+
