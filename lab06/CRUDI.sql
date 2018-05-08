@@ -30,7 +30,7 @@ ROLLBACK;
 RAISE_APPLICATION_ERROR(-20001, 'No se puede modificar el plan de formacion');
 END Modificar_Plan;
 
-PROCEDURE Modificar_Prioridad (numeroP NUMBER, nombreH VARCHAR, Tprioridad VARCHAR) IS
+PROCEDURE Modificar_Prioridad (Tprioridad VARCHAR, nombreH VARCHAR, numeroP NUMBER) IS
 BEGIN
 UPDATE tienePrioridad SET prioridad = Tprioridad WHERE numeroPF = numeroP AND nombreCortoH = nombreH;
 COMMIT;
