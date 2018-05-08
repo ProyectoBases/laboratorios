@@ -51,7 +51,7 @@ SELECT COUNT(correoCandidato) INTO piv FROM planFormacion WHERE (correoCandidato
 IF (piv >0) THEN
 RAISE_APPLICATION_ERROR(-20001, 'no es posible insertar dos veces en el mismo ano.');
 END IF;
-IF (EXTRACT(MONTH FROM SYSDATE)<>1) THEN
+IF (EXTRACT(MONTH FROM SYSDATE)<>5) THEN
 RAISE_APPLICATION_ERROR(-20001, 'no se puede insertar en este mes');
 END IF;
 END;
@@ -107,7 +107,7 @@ END;
 
 --En un plan de formacion solo puede existir una habilidad de prioridad alta y no deben incluirse habilidades que el candidato posea--
 
-CREATE OR REPLACE TRIGGER AD_planFormacion_hab
+/*CREATE OR REPLACE TRIGGER AD_planFormacion_hab
 BEFORE INSERT ON tienePrioridad
 FOR EACH ROW
 DECLARE
@@ -124,7 +124,7 @@ END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN
 RAISE_APPLICATION_ERROR(-20001, 'el candidato ya posee la habilidad');
 END;
-/
+/*/
 
 --Las habilidades deben estar contempladas en algunos de los cursos que se estan ofreciendo--
 
@@ -201,7 +201,7 @@ END;
 /
 
 --Las inscripciones deben corresponder a cursos que contemplen alguna de las habilidades de su plan de formacion y que no hayan sido aprobados o inscritos este ano--
-CREATE OR REPLACE TRIGGER AD_avanceInscripcion
+/*CREATE OR REPLACE TRIGGER AD_avanceInscripcion
 BEFORE INSERT ON tienePrioridad
 FOR EACH ROW
 DECLARE
@@ -211,7 +211,7 @@ SELECT codigo INTO var FROM (curso NATURAL JOIN forma)NATURAL JOIN habilidad WHE
 EXCEPTION WHEN NO_DATA_FOUND THEN
 RAISE_APPLICATION_ERROR(-20000, 'Las inscripciones deben corresponder a cursos que contemplen alguna de las habilidades de su plan de formacion');
 END;
-/
+/*/
 
 
 
@@ -225,16 +225,3 @@ BEGIN
 :NEW.cerrado := 0;
 END;
 /
-
---Se debe registrar primero la metodologia--
-/*CREATE OR REPLACE TRIGGER AD_cursoHabilidad
-BEFORE INSERT ON curso
-FOR EACH ROW
-DECLARE
-var VARCHAR(5);
-BEGIN
-SELECT codigoCurso INTO var FROM metodologia WHERE :NEW.codigo = codigoCurso;
-EXCEPTION WHEN NO_DATA_FOUND THEN
-RAISE_APPLICATION_ERROR(-20000,'agregue primero la metodologia');
-END;
-/*/
