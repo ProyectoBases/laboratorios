@@ -4,7 +4,7 @@
 CREATE OR REPLACE PACKAGE PC_PLANDEFORMACION IS
 
 PROCEDURE Adicionar_Plan (id NUMBER, inicio DATE, habilitado VARCHAR, profe VARCHAR, correo VARCHAR);
-PROCEDURE Adicionar_Prioridad (Tprioridad VARCHAR);
+PROCEDURE Adicionar_Prioridad (Tprioridad VARCHAR, nombreH VARCHAR, numeroP NUMBER);
 PROCEDURE Modificar_Plan (id NUMBER, habilitado VARCHAR, profe VARCHAR, final DATE);
 PROCEDURE Modificar_Prioridad (Tprioridad VARCHAR, nombreH VARCHAR, numeroP NUMBER);
 FUNCTION Consultar_Forma_Hab RETURN SYS_REFCURSOR;
