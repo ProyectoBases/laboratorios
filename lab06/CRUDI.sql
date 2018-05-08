@@ -10,9 +10,9 @@ ROLLBACK;
 RAISE_APPLICATION_ERROR(-20000, 'No se puede adicionar el plan de formacion');
 END Adicionar_Plan;
 
-PROCEDURE Adicionar_Prioridad (Tprioridad VARCHAR) IS
+PROCEDURE Adicionar_Prioridad (Tprioridad VARCHAR, nombreH VARCHAR, numeroP NUMBER) IS
 BEGIN
-INSERT INTO tienePrioridad (prioridad) VALUES (Tprioridad);
+INSERT INTO tienePrioridad (prioridad,nombreCortoH,numeroPF) VALUES (Tprioridad, nombreH, numeroP);
 COMMIT;
 EXCEPTION
 WHEN OTHERS THEN
@@ -40,7 +40,7 @@ ROLLBACK;
 RAISE_APPLICATION_ERROR(-20001, 'No se puede modificar la prioridad');
 END Modificar_Prioridad;
 
---Consultar estado de formación por habilidades--
+--Consultar estado de formacion por habilidades--
 FUNCTION Consultar_Forma_Hab RETURN SYS_REFCURSOR IS Form_Hab SYS_REFCURSOR;
 BEGIN
 OPEN Form_Hab FOR
@@ -108,4 +108,3 @@ RETURN(Curso_Hab);
 END;
 
 END PC_CURSOS;
-
