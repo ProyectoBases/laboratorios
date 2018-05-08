@@ -20,9 +20,9 @@ ROLLBACK;
 RAISE_APPLICATION_ERROR(-20000, 'No se puede adicionar la prioridad');
 END Adicionar_Prioridad;
 
-PROCEDURE Modificar_Plan (id NUMBER, inicio VARCHAR, profe VARCHAR, final DATE) IS
+PROCEDURE Modificar_Plan (id NUMBER, habilitado VARCHAR, profe VARCHAR, final DATE) IS
 BEGIN
-UPDATE planFormacion SET fecha = inicio, evaluador = profe, fechaFin = final WHERE numero = id;
+UPDATE planFormacion SET estado = habilitado, evaluador = profe, fechaFin = final WHERE numero = id;
 COMMIT;
 EXCEPTION
 WHEN OTHERS THEN
@@ -44,8 +44,8 @@ END Modificar_Prioridad;
 FUNCTION Consultar_Forma_Hab RETURN SYS_REFCURSOR IS Form_Hab SYS_REFCURSOR;
 BEGIN
 OPEN Form_Hab FOR
-SELECT nombreCorto, COUNT(x.nombreCortoH), COUNT(y.correoCandidato)FROM habilidad, curso x, candidato, posee y
-WHERE x.nombreCortoH = nombreCorto AND nombreCorto = y.nombreCortoH AND correo = y.correoCandidato
+SELECT nombreCorto, COUNT(curso.nombreCortoH), COUNT(posee.correoCandidato) FROM habilidad, curso, candidato, posee
+WHERE curso.nombreCortoH = nombreCorto AND nombreCorto = posee.nombreCortoH AND correo = posee.correoCandidato
 GROUP BY nombreCorto;
 RETURN(Form_Hab);
 END;
@@ -54,7 +54,7 @@ END;
 FUNCTION Consultar_Info_Candidato RETURN SYS_REFCURSOR IS Info_Candidato SYS_REFCURSOR;
 BEGIN
 OPEN Info_Candidato FOR
-SELECT nombres, nombreCortoH AS habilidad, correo FROM candidato x, posee y WHERE x.correo = y.correoCandidato;
+SELECT nombres, nombreCortoH AS habilidad, correo FROM candidato, posee WHERE candidato.correo = posee.correoCandidato;
 RETURN(Info_Candidato);
 END;
 
@@ -103,7 +103,7 @@ END;    ---esta mal---
 FUNCTION Consultar_CursoHab(hab VARCHAR) RETURN SYS_REFCURSOR IS Curso_Hab SYS_REFCURSOR;
 BEGIN
 OPEN Curso_Hab FOR
-SELECT x.nombre FROM curso x, habilidad y WHERE x.nombreCortoH = y.nombreCorto AND y.nombreCorto = hab;
+SELECT curso.nombre FROM curso, habilidad WHERE curso.nombreCortoH = habilidad.nombreCorto AND habilidad.nombreCorto = hab;
 RETURN(Curso_Hab);
 END;
 
