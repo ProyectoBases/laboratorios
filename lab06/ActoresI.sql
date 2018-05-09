@@ -5,9 +5,9 @@ CREATE OR REPLACE PACKAGE BODY PA_JUNTA AS
 		PC_PLANDEFORMACION.Adicionar_Plan(id, inicio, habilitado, profe, correo);
 	END Adicionar_Plan;
     
-    PROCEDURE Adicionar_Prioridad(Tprioridad VARCHAR,nombre VARCHAR, numero NUMBER) IS
+    PROCEDURE Adicionar_Prioridad(Tprioridad VARCHAR, nombreH VARCHAR, numeroP NUMBER) IS
 	BEGIN 
-		PC_PLANDEFORMACION.Adicionar_Prioridad (Tprioridad,nombre,numero);
+		PC_PLANDEFORMACION.Adicionar_Prioridad (Tprioridad, nombreH, numeroP);
 	END Adicionar_Prioridad;
     
     PROCEDURE Modificar_Plan(id NUMBER, habilitado VARCHAR, profe VARCHAR, final DATE) IS
@@ -20,9 +20,9 @@ CREATE OR REPLACE PACKAGE BODY PA_JUNTA AS
 		PC_PLANDEFORMACION.Modificar_Prioridad(numeroP, nombreH, Tprioridad);
 	END Modificar_Prioridad;
     
-    PROCEDURE Adicionar_Curso(id VARCHAR, name VARCHAR, habilitado NUMBER) IS
+    PROCEDURE Adicionar_Curso(id VARCHAR, name VARCHAR, habilitado NUMBER, nombreH VARCHAR) IS
 	BEGIN 
-		PC_CURSOS.Adicionar_Curso(id, name, habilitado);
+		PC_CURSOS.Adicionar_Curso(id, name, habilitado, nombreH);
 	END Adicionar_Curso;
     
     PROCEDURE Modificar_Curso(id VARCHAR, info VARCHAR, habilitado NUMBER) IS
