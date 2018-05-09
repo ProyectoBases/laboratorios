@@ -145,7 +145,7 @@ END;
 
 --Las modificaciones solo son posibles en el mes de enero--
 
-CREATE OR REPLACE TRIGGER MO_planFormacion
+/*CREATE OR REPLACE TRIGGER MO_planFormacion
 BEFORE UPDATE ON planFormacion
 FOR EACH ROW
 BEGIN
@@ -153,7 +153,7 @@ IF (EXTRACT(MONTH FROM SYSDATE)<>1) THEN
 RAISE_APPLICATION_ERROR(-20001,'solo son posibles las modificaciones en el mes de enero');
 END IF;
 END;
-/
+/*/
 
 ----NO SE PERMITE ELIMINAR----
 

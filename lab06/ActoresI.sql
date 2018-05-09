@@ -5,9 +5,9 @@ CREATE OR REPLACE PACKAGE BODY PA_JUNTA AS
 		PC_PLANDEFORMACION.Adicionar_Plan(id, inicio, habilitado, profe, correo);
 	END Adicionar_Plan;
     
-    PROCEDURE Adicionar_Prioridad(Tprioridad VARCHAR) IS
+    PROCEDURE Adicionar_Prioridad(Tprioridad VARCHAR,nombre VARCHAR, numero NUMBER) IS
 	BEGIN 
-		PC_PLANDEFORMACION.Adicionar_Prioridad (Tprioridad);
+		PC_PLANDEFORMACION.Adicionar_Prioridad (Tprioridad,nombre,numero);
 	END Adicionar_Prioridad;
     
     PROCEDURE Modificar_Plan(id NUMBER, habilitado VARCHAR, profe VARCHAR, final DATE) IS
